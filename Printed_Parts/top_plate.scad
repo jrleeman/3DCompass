@@ -16,13 +16,13 @@ mag_y_pos = 9;
 mag_spacing = 13;
 
 cutout_width = 20;
-cutout_height = 40;
+cutout_height = 45;
 
 difference(){
 cube([width,length,thickness]);
 
-translate([10,length/2.-cutout_height/2.-2.5,0])cube([cutout_width,cutout_height,10]);
-translate([width-10-cutout_width,length/2.-cutout_height/2.-2.5,0])cube([cutout_width,cutout_height,10]);
+translate([10,length/2.-cutout_height/2.,0])cube([cutout_width,cutout_height,10]);
+translate([width-10-cutout_width,length/2.-cutout_height/2.,0])cube([cutout_width,cutout_height,10]);
 
 // Holes for magnetometer mount threaded inserts
 translate([mag_x_pos,mag_y_pos,0])cylinder(7,3.5814/2,3.5814/2);
@@ -33,6 +33,10 @@ translate([hole_offset,hole_offset,0])cylinder(7,1.64,1.64);
 translate([hole_offset,length-hole_offset,0])cylinder(7,1.64,1.64);
 translate([width-hole_offset,hole_offset,0])cylinder(7,1.64,1.64);
 translate([width-hole_offset,length-hole_offset,0])cylinder(7,1.64,1.64);
+
+// Cutout for capacitor
+//translate([,,thickness])cylinder(15.,5.5,5.5);
+
 }
 
 // Support posts for 
