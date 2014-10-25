@@ -35,7 +35,9 @@ translate([width-hole_offset,hole_offset,0])cylinder(7,1.64,1.64);
 translate([width-hole_offset,length-hole_offset,0])cylinder(7,1.64,1.64);
 
 // Cutout for capacitor
-//translate([,,thickness])cylinder(15.,5.5,5.5);
+translate([10+cutout_width/2.,length/2.+cutout_height/2.+12,thickness])
+rotate([90,0,0])
+cylinder(20.,5.5,5.25);
 
 }
 
