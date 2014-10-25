@@ -41,26 +41,38 @@ cylinder(20.,5.5,5.25);
 
 }
 
-// Support posts for 
-post_radius = 4/2.;
+// Support post sizes
+post_radius = 4.5/2.;
 post_height = 45/2.;
+
+fillet_height = 0.05;
+fillet_radius = 1.32;
 
 // Neopixil Ring Sizes
 largeRing_cc = 59;
 smallRing_OD = 45;
 smallRing_ID = 31;
 
+// Horizontal Ring Support Posts
 translate([width/2.-largeRing_cc/2.,length/2.,thickness])
 cylinder(post_height,post_radius,post_radius);
+translate([width/2.-largeRing_cc/2.,length/2.,thickness])
+cylinder(post_height*fillet_height,post_radius*fillet_radius,post_radius);
 
 translate([width/2.+largeRing_cc/2.,length/2.,thickness])
 cylinder(post_height,post_radius,post_radius);
+translate([width/2.+largeRing_cc/2.,length/2.,thickness])
+cylinder(post_height*fillet_height,post_radius*fillet_radius,post_radius);
 
 translate([width/2.,length/2.-largeRing_cc/2.,thickness])
 cylinder(post_height,post_radius,post_radius);
+translate([width/2.,length/2.-largeRing_cc/2.,thickness])
+cylinder(post_height*fillet_height,post_radius*fillet_radius,post_radius);
 
 translate([width/2.,length/2.+largeRing_cc/2.,thickness])
 cylinder(post_height,post_radius,post_radius);
+translate([width/2.,length/2.+largeRing_cc/2.,thickness])
+cylinder(post_height*fillet_height,post_radius*fillet_radius,post_radius);
 
 // Supports for vertical ring
 
