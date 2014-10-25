@@ -8,22 +8,22 @@ length = 73;
 inside_thickness = 35;
 
 x_offset = 9.5;
-y_offset = 6.7;
+y_offset = 3.2;
 hole_offset = 5;
 
-cutout_width = 65;
+cutout_width = 60;
 cutout_height = 40;
 
 post_size = 5;
 post_height = 20;
 
 4_40_radius = 1.64;
-4_40_depth = 5.6;
+4_40_depth = 6.6;
 
 difference(){
 cube([width,length,thickness]);
 
-translate([width/2.-cutout_width/2.,length/2.-cutout_height/2.,0])cube([cutout_width,cutout_height,10]);
+translate([width/2.-cutout_width/2.,length/2.-cutout_height/2. - y_offset -2,0])cube([cutout_width,cutout_height,10]);
 
 // Holes for Arduino mount threaded inserts
 translate([3*2.54+x_offset,1*2.54+y_offset,0])cylinder(7,3.5814/2,3.5814/2);
