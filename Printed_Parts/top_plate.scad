@@ -91,5 +91,8 @@ cylinder(2,smallRing_OD/2.,smallRing_OD/2.);
 
 // Cutout hole in center
 cylinder(4,smallRing_ID/2.,smallRing_ID/2.);
+
+// Wire hole cutout
+translate([-21*0.707,21*0.707,0])cylinder(4,1.5,1.5);
 }
 
