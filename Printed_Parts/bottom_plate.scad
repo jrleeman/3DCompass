@@ -32,10 +32,15 @@ translate([1*2.54+x_offset,21.5*2.54+y_offset,0])cylinder(7,3.5814/2,3.5814/2);
 translate([20*2.54+x_offset,21*2.54+y_offset,0])cylinder(7,3.5814/2,3.5814/2);
 }
 
-difference(){
 //Corner posts
-translate([hole_offset-post_size/2.,hole_offset-post_size/2.,thickness])
-cube([post_size,post_size,post_height]);
+difference(){
+union(){
+translate([hole_offset,hole_offset,thickness])
+cylinder(post_height,post_size/2.,post_size/2.);
+
+translate([hole_offset-post_size/2.+4_40_radius*1.5,hole_offset-post_size/2.+4_40_radius*1.5,thickness+post_height/2])
+cylinder(post_height/2,4_40_radius*1.5,post_size);
+}
 
 // Holes for bracket mount 4-40 through hole
 translate([hole_offset,hole_offset,thickness+post_height-4_40_depth])
@@ -43,8 +48,13 @@ cylinder(4_40_depth+1,4_40_radius,4_40_radius);
 }
 
 difference(){
-translate([hole_offset-post_size/2.,length-hole_offset-post_size/2.,thickness])
-cube([post_size,post_size,post_height]);
+union(){
+translate([hole_offset,length-hole_offset,thickness])
+cylinder(post_height,post_size/2.,post_size/2.);
+
+translate([hole_offset-post_size/2.+4_40_radius*1.5,length-hole_offset-post_size/2.+4_40_radius*1.5,thickness+post_height/2])
+cylinder(post_height/2,4_40_radius*1.5,post_size);
+}
 
 translate([hole_offset,length-hole_offset,thickness+post_height-4_40_depth])
 cylinder(4_40_depth+1,4_40_radius,4_40_radius);
@@ -52,8 +62,13 @@ cylinder(4_40_depth+1,4_40_radius,4_40_radius);
 }
 
 difference(){
-translate([width-hole_offset-post_size/2.,length-hole_offset-post_size/2.,thickness])
-cube([post_size,post_size,post_height]);
+union(){
+translate([width-hole_offset,length-hole_offset,thickness])
+cylinder(post_height,post_size/2.,post_size/2.);
+
+translate([width-hole_offset-post_size/2.+4_40_radius*1.5,length-hole_offset-post_size/2.+4_40_radius*1.5,thickness+post_height/2])
+cylinder(post_height/2,4_40_radius*1.5,post_size);
+}
 
 translate([width-hole_offset,length-hole_offset,thickness+post_height-4_40_depth])
 cylinder(4_40_depth+1,4_40_radius,4_40_radius);
@@ -61,8 +76,13 @@ cylinder(4_40_depth+1,4_40_radius,4_40_radius);
 }
 
 difference(){
-translate([width-hole_offset-post_size/2.,hole_offset-post_size/2.,thickness])
-cube([post_size,post_size,post_height]);
+union(){
+translate([width-hole_offset,hole_offset,thickness])
+cylinder(post_height,post_size/2.,post_size/2.);
+
+translate([width-hole_offset-post_size/2.+4_40_radius*1.5,hole_offset-post_size/2.+4_40_radius*1.5,thickness+post_height/2])
+cylinder(post_height/2,4_40_radius*1.5,post_size);
+}
 
 translate([width-hole_offset,hole_offset,thickness+post_height-4_40_depth])
 cylinder(4_40_depth+1,4_40_radius,4_40_radius);
