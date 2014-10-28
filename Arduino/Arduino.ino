@@ -3,7 +3,7 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
 
-#define PIXILPIN 2
+#define PIXILPIN 13
 #define NUMAZ 24
 #define NUMINC 16
 
