@@ -29,13 +29,13 @@ translate([mag_x_pos,mag_y_pos,0])cylinder(7,3.5814/2,3.5814/2);
 translate([mag_x_pos+mag_spacing,mag_y_pos,0])cylinder(7,3.5814/2,3.5814/2);
 
 // Holes for bracket mount 4-40 through hole
-translate([hole_offset,hole_offset,0])cylinder(7,1.64,1.64);
-translate([hole_offset,length-hole_offset,0])cylinder(7,1.64,1.64);
-translate([width-hole_offset,hole_offset,0])cylinder(7,1.64,1.64);
-translate([width-hole_offset,length-hole_offset,0])cylinder(7,1.64,1.64);
+translate([hole_offset,hole_offset,0])cylinder(7,1.9,1.9);
+translate([hole_offset,length-hole_offset,0])cylinder(7,1.9,1.9);
+translate([width-hole_offset,hole_offset,0])cylinder(7,1.9,1.9);
+translate([width-hole_offset,length-hole_offset,0])cylinder(7,1.9,1.9);
 
 // Cutout for capacitor
-translate([10+cutout_width/2.,length/2.+cutout_height/2.+12,thickness])
+translate([10+cutout_width/2.,length/2.+cutout_height/2.+12,thickness+1])
 rotate([90,0,0])
 cylinder(20.,5.5,5.25);
 
