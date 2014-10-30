@@ -3,12 +3,12 @@
 
 #define PIXILPIN 13 // Pin on the Arduino that the NeoPixil chain is connected to
 #define NUMAZ 24  // Number of pixils on the azimuth ring
+#define NUMINC 16
 
-#define AZREF 5 // Pixil Number that the y+ axis points at
+#define AZREF 11 // Pixil Number that the y+ axis points at
 
 int azPixel = 0;
 
-Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(12345);
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMAZ + NUMINC, PIXILPIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
@@ -47,29 +47,29 @@ void loop() {
   delay(2000);
 }
 
-void plotAzimuth(float heading){
+void plotAzimuth(int angle){
   strip.setPixelColor(azPixel, 0,0,0);
-  azPixel = int((360-heading)/(360/NUMAZ));
+  azPixel = angle/(360/NUMAZ);
   // Rotate so it is like pixil 0 is at +x
   azPixel += AZREF;
-  if (azPixel>23)
-    axPixel -= 23  
+  if (azPixel >= NUMAZ)
+    azPixel -= NUMAZ;  
   strip.setPixelColor(azPixel, 50,0,0);
   strip.show();
 }
 
-void allOn(){
-  for (i=0; i<NUMAZ; i++){
+void allOn() {
+  for (int i=0; i<NUMAZ; i++){
     strip.setPixelColor(i,20,20,20);
   }
-  strip.show()
+  strip.show();
 }
 
-void allOff(){
-  for (i=0; i<NUMAZ; i++){
+void allOff() {
+  for (int i=0; i<NUMAZ; i++){
     strip.setPixelColor(i,0,0,0);
   }
-  strip.show()
+  strip.show();
 }
 
 
