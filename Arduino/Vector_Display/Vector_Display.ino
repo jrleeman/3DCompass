@@ -3,13 +3,17 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
 
-#define PIXILPIN 13
-#define NUMAZ 24
-#define NUMINC 16
+#define PIXILPIN 13 // Pin on the Arduino that the NeoPixil chain is connected to
+#define NUMAZ 24  // Number of pixils on the azimuth ring
+#define NUMINC 16 // Number of pixils on the inclination ring
+
+#define AZREF 5 // Pixil Number that the y+ axis points at
+#define INCREF 10 // Pixil Number (ring frame) that is to the +x axis side of vertical
 
 float heading;
 float inclination;
 int azPixel = 0;
+int incPixel = 0;
 
 Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(12345);
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMAZ + NUMINC, PIXILPIN, NEO_GRB + NEO_KHZ800);
@@ -56,9 +60,27 @@ void loop() {
 void plotAzimuth(float heading){
   strip.setPixelColor(azPixel, 0,0,0);
   azPixel = int((360-heading)/(360/NUMAZ));
+  // Rotate so it is like pixil 0 is at +x
+  azPixel += AZREF;
+  if (azPixel>23)
+    axPixel -= 23  
   strip.setPixelColor(azPixel, 50,0,0);
   strip.show();
 }
+
+void plotInclination(float inclination){
+  strip.setPixelColor(incPixel, 0,0,0);
+  incPixel = int((360-inclination)/(360/NUMINC));
+  // Rotate so it is like pixil 0 is at +x
+  incPixel += INCREF;
+  if (incPixel>15)
+    incPixel -= 15  
+  // Add offset from previous pixel ring
+  incPixel += 23
+  strip.setPixelColor(incPixel, 50,0,0);
+  strip.show();
+}
+  
   
 
 float calcInclination(float x, float y, float z)
