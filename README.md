@@ -7,6 +7,7 @@
 - (1) [1000uF Capacitor - 6.3V or higher](https://www.sparkfun.com/products/8982) $0.35/ea
 - (1) [HMC5883L Magnetometer](http://www.adafruit.com/products/1746) $9.95/ea
 - (10) [Brass Heat-Set Insert 4-40](http://www.mcmaster.com/#93365a122/=ub3kod) $11.48/pk. 100
+- 0.1" Header Pins
 - Hook-up wire (solid)
 - 300-500 Ohm Resistor (1/8 watt)
 - Nylon 4-40 Screws (1/2 - 1" length)
@@ -18,8 +19,9 @@
 - Soldering Iron/Solder
 - Flat-head screwdriver
 - Hot Glue Gun/Glue
+- USB mini cable
 
-## Assembly Instructions
+## Mechanical Assembly Instructions
 
 ### 3D Printing Brackets
 - Print 1 top and 1 bottom bracket. 60% infill and a raft are recommended.
@@ -28,16 +30,42 @@ bottom plate, 4 in riser posts, 4 in Arduino mounts. Two in top plate for
 magnetometer mounts. [Demonstration Video](http://youtu.be/NXAhOEn8nXQ)
 
 ### Assemble Top Plate
-- Using the 7/64" drill bit, drill out the mounting holes in the magnetometer
-breakout bracket. The existing holes are not quite large enough for 4-40
-screws.
 - Attach the magnetometer with 4-40 nylon screws. Shear the excess length flush
-with the bottom of the plate using the hobby knife. Be careful to not break
-the superstructure on the part.
+with the bottom of the plate using a hobby knife. Be careful to not break
+the superstructure on the printed part.
 - Place the capacitor into the cut-out and secure with a drop of hot glue.
-- Place the 16-element NeoPixel ring into the vertical ring holder. Line the
-data-in line up with the hole in the bracket. This ensures that data-in, V+,
+- Solder ~5 cm of wire onto the data in line on the 16-element ring.
+- Place the 16-element NeoPixel ring into the vertical ring holder. Thread the
+data-in line through the hole in the bracket. This ensures that data-in, V+,
 and GND are all accessable. Secure with a drop of hot-glue.
 - Place the 24-element NeoPixel ring onto the riser posts. Line up the data-out
 pad to be near the data-in line on the smaller ring. The LED should be directly
 above the mounting post. Secure with hot-glue on each post.
+
+### Assemble Bottom Plate
+- Secure the Arduino RedBoard to the base plate with 4-40 nylon screws. Shear
+the excess length flush with the bottom of the plate using a hobby knife.
+
+### Attaching the Plates
+- Using the 4-40 nylon screws, attach the top and bottom plates. Shear
+the excess length flush with the bottom of the plate using a hobby knife. You
+may prefer to do the wiring with the screws out for easy access, but it
+shouldn't be too much of a problem.
+
+## Wiring Instructions
+* See photos on how to make this easier with header.
+- Trim and solder the data-in wire on the vertical ring to the data-out pad
+on the 24-element ring.
+- Connect the data-in pad on the 24-element horizontal ring to pin 13 on the
+Arduino. You can use 0.1" header to make this easier to assemble and troubleshoot.
+- Connect a ground pad from the 24-element horizontal ring to a ground pad
+on the 16-element vertical ring.
+- Connect the second ground pad on the 16-element vertical ring to the ground
+size of the capacitor (marked with -- on the case).
+- Connect the ground side of the capacitor to GND on the Arduino. Header can
+make this easier.
+- Connect the power pads of both rings to the positive side of the capacitor.
+- Connect the positive side of the capacitor to +5VDC on the Arduino.
+- Connect the GND, SDA, and SCL pins of the magnetometer to GND, SDA, and SCL
+on the Arduino.
+- Connect the power pin of the magnetometer to the +3.3VDC pin on the Arduino.
