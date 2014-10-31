@@ -1,19 +1,19 @@
 #include <Adafruit_NeoPixel.h>
 #include <Wire.h>
 
-#define PIXILPIN 13 // Pin on the Arduino that the NeoPixil chain is connected to
-#define NUMAZ 24  // Number of pixils on the azimuth ring
-#define NUMINC 16 // Number of pixils on the inclination ring
+#define PIXELPIN 13 // Pin on the Arduino that the NeoPixil chain is connected to
+#define NUMAZ 24  // Number of pixels on the azimuth ring
+#define NUMINC 16 // Number of pixels on the inclination ring
 
 #define AZREF 11 // Pixil Number that the y+ axis points at
 
-int azPixel = 0; // Stores pixil that was turned on
+int azPixel = 0; // Stores pixel that was turned on
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMAZ + NUMINC, PIXILPIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMAZ + NUMINC, PIXELPIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   
-  // Start strip and make all pixils dark
+  // Start strip and make all pixels dark
   strip.begin();
   strip.show();
   
@@ -21,7 +21,7 @@ void setup() {
   Serial.begin(115200);
   Serial.println("NESW Ring Orientation Test");
   Serial.println("");
-  Serial.println("The AZREF definition should be setup for the pixil that is");
+  Serial.println("The AZREF definition should be setup for the pixel that is");
   Serial.println("Located in the +y direction.");
   Serial.println("");
   Serial.println("This should run through a 4 element pattern, to check ring");
@@ -62,17 +62,17 @@ void loop() {
 }
 
 void plotAzimuth(int angle){
-  /* Plot a single pixil at the angle provided, assuming
+  /* Plot a single pixel at the angle provided, assuming
   that "North" is the +y axis as marked on the magnetometer.
   */
   
-  // Turn off old pixil
+  // Turn off old pixel
   strip.setPixelColor(azPixel, 0,0,0);
   
-  // Calculate new pixil number
+  // Calculate new pixel number
   azPixel = angle/(360/NUMAZ);
   
-  // Rotate so it is like pixil 0 is at +x and correct if 
+  // Rotate so it is like pixel 0 is at +x and correct if 
   // we run onto the next ring
   azPixel += AZREF;
   if (azPixel >= NUMAZ)
