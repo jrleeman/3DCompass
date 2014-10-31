@@ -3,22 +3,26 @@
 
 #define PIXILPIN 13 // Pin on the Arduino that the NeoPixil chain is connected to
 #define NUMAZ 24  // Number of pixils on the azimuth ring
-#define NUMINC 16
+#define NUMINC 16 // Number of pixils on the inclination ring
 
 #define AZREF 11 // Pixil Number that the y+ axis points at
 
-int azPixel = 0;
+int azPixel = 0; // Stores pixil that was turned on
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMAZ + NUMINC, PIXILPIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
+  
   // Start strip and make all pixils dark
   strip.begin();
   strip.show();
   
-  // Start the serial port to stream data back
+  // Start the serial port and write description
   Serial.begin(115200);
   Serial.println("NESW Ring Orientation Test");
+  Serial.println("");
+  Serial.println("The AZREF definition should be setup for the pixil that is");
+  Serial.println("Located in the +y direction.");
   Serial.println("");
   Serial.println("This should run through a 4 element pattern, to check ring");
   Serial.println("orientation. First all lights will turn on, then off. Ring");
@@ -35,30 +39,52 @@ void setup() {
 }
 
 void loop() {  
+  
+  // "North" w.r.t x-axis
   plotAzimuth(0);
   delay(1000);
+  
+  // "East" w.r.t x-axis
   plotAzimuth(90);
   delay(1000);
+  
+  // "South" w.r.t x-axis
   plotAzimuth(180);
   delay(1000);
+  
+  // "West" w.r.t x-axis
   plotAzimuth(270);
   delay(1000);
+  
+  // All off and wait
   allOff();
   delay(2000);
 }
 
 void plotAzimuth(int angle){
+  /* Plot a single pixil at the angle provided, assuming
+  that "North" is the +y axis as marked on the magnetometer.
+  */
+  
+  // Turn off old pixil
   strip.setPixelColor(azPixel, 0,0,0);
+  
+  // Calculate new pixil number
   azPixel = angle/(360/NUMAZ);
-  // Rotate so it is like pixil 0 is at +x
+  
+  // Rotate so it is like pixil 0 is at +x and correct if 
+  // we run onto the next ring
   azPixel += AZREF;
   if (azPixel >= NUMAZ)
     azPixel -= NUMAZ;  
+    
+  // Turn on the new pixel
   strip.setPixelColor(azPixel, 50,0,0);
   strip.show();
 }
 
 void allOn() {
+  // Turn on all azimuth pixels
   for (int i=0; i<NUMAZ; i++){
     strip.setPixelColor(i,20,20,20);
   }
@@ -66,6 +92,7 @@ void allOn() {
 }
 
 void allOff() {
+  // Turn off all azimuth pixels
   for (int i=0; i<NUMAZ; i++){
     strip.setPixelColor(i,0,0,0);
   }
