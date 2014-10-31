@@ -1,7 +1,7 @@
 /*
   AZ_Orientation_Test.ino
   
-  This sketch provides a way for you to ensure that the ring is mounted correctly
+  This sketch provides a way for you to ensure that the azimuth ring is mounted correctly
   and that you know the correct value to set for the AZREF variable. AZREF should
   be set to the pixel number that the +y axis points at. 
   
@@ -24,6 +24,7 @@
 
 int azPixel = 0; // Stores pixel that was turned on
 
+//Setup neopixels
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMAZ + NUMINC, PIXELPIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
@@ -34,10 +35,10 @@ void setup() {
   
   // Start the serial port and write description
   Serial.begin(115200);
-  Serial.println("NESW Ring Orientation Test");
+  Serial.println("Azimuth Ring Orientation Test");
   Serial.println("");
   Serial.println("The AZREF definition should be setup for the pixel that is");
-  Serial.println("Located in the +y direction.");
+  Serial.println("located in the +y direction.");
   Serial.println("");
   Serial.println("This should run through a 4 element pattern, to check ring");
   Serial.println("orientation. First all lights will turn on, then off. Ring");
@@ -50,7 +51,6 @@ void setup() {
   delay(2000);
   allOff();
   delay(1000);
-
 }
 
 void loop() {  
