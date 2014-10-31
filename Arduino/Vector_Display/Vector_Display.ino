@@ -53,17 +53,18 @@ void loop() {
   Serial.print(heading); Serial.print(",");
   Serial.println(inclination);
   
-  plotAzimuth(heading);
+  plotAzimuth(360 - heading);
+  plotInclination(inclination);
   delay(10);
 }
 
-void plotAzimuth(float heading){
+void plotAzimuth(int angle){
   strip.setPixelColor(azPixel, 0,0,0);
-  azPixel = int((360-heading)/(360/NUMAZ));
+  azPixel = angle/(360/NUMAZ);
   // Rotate so it is like pixil 0 is at +x
   azPixel += AZREF;
-  if (azPixel>23)
-    axPixel -= 23  
+  if (azPixel >= NUMAZ)
+    azPixel -= NUMAZ;  
   strip.setPixelColor(azPixel, 50,0,0);
   strip.show();
 }
@@ -74,9 +75,9 @@ void plotInclination(float inclination){
   // Rotate so it is like pixil 0 is at +x
   incPixel += INCREF;
   if (incPixel>15)
-    incPixel -= 15  
+    incPixel -= 15;  
   // Add offset from previous pixel ring
-  incPixel += 23
+  incPixel += 23;
   strip.setPixelColor(incPixel, 50,0,0);
   strip.show();
 }
