@@ -1,3 +1,18 @@
+/*
+  AZ_Orientation_Test.ino
+  
+  This sketch provides a way for you to ensure that the ring is mounted correctly
+  and that you know the correct value to set for the AZREF variable. AZREF should
+  be set to the pixel number that the +y axis points at. 
+  
+  Created: 10/30/14
+  Author: John R. Leeman
+  Modified: 10/31/14
+  www.johnrleeman.com
+  www.github.com/jrleeman
+*/
+  
+
 #include <Adafruit_NeoPixel.h>
 #include <Wire.h>
 
@@ -75,8 +90,9 @@ void plotAzimuth(int angle){
   // Rotate so it is like pixel 0 is at +x and correct if 
   // we run onto the next ring
   azPixel += AZREF;
-  if (azPixel >= NUMAZ)
+  if (azPixel >= NUMAZ){
     azPixel -= NUMAZ;  
+  }
     
   // Turn on the new pixel
   strip.setPixelColor(azPixel, 50,0,0);
