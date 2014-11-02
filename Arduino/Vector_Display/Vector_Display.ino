@@ -60,7 +60,7 @@ void loop() {
   }
   
   plotAzimuth(360 - heading);
-  plotInclination(inclination);
+  //plotInclination(inclination);
   count += 1;
   delay(10);
 }
