@@ -15,6 +15,9 @@ float inclination;
 int azPixel = 0;
 int incPixel = 0;
 
+// Counter to update serial output more slowly
+int count = 0;
+
 Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(12345);
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMAZ + NUMINC, PIXILPIN, NEO_GRB + NEO_KHZ800);
 
@@ -47,15 +50,19 @@ void loop() {
   heading = 180/M_PI * calcHeading(event.magnetic.x,event.magnetic.y,event.magnetic.z);
   inclination = 180/M_PI * calcInclination(event.magnetic.x,event.magnetic.y,event.magnetic.z);
   
-  Serial.print(event.magnetic.x); Serial.print(","); 
-  Serial.print(event.magnetic.y); Serial.print(",");
-  Serial.print(event.magnetic.z); Serial.print(",");
-  Serial.print(heading); Serial.print(",");
-  Serial.println(inclination);
+  if (count%25 == 0){
+    Serial.print(event.magnetic.x); Serial.print(","); 
+    Serial.print(event.magnetic.y); Serial.print(",");
+    Serial.print(event.magnetic.z); Serial.print(",");
+    Serial.print(heading); Serial.print(",");
+    Serial.println(inclination);
+    count = 0;
+  }
   
   plotAzimuth(360 - heading);
   plotInclination(inclination);
-  //delay(100);
+  count += 1;
+  delay(10);
 }
 
 void plotAzimuth(int angle){
@@ -74,13 +81,6 @@ void plotAzimuth(int angle){
       pixDeg += 360;
     }
     // Have pixil number in pix, now do color magic
-    Serial.print("Pixil ");
-    Serial.print(pix);
-    Serial.print(" at ");
-    Serial.print(pixDeg);
-    Serial.print(" degrees, difference of ");
-    Serial.println(abs(pixDeg - angle));
-    
     int diff;
     diff = abs(pixDeg - angle);
     
