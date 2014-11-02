@@ -55,17 +55,57 @@ void loop() {
   
   plotAzimuth(360 - heading);
   plotInclination(inclination);
-  delay(10);
+  //delay(100);
 }
 
 void plotAzimuth(int angle){
-  strip.setPixelColor(azPixel, 0,0,0);
-  azPixel = angle/(360/NUMAZ);
-  // Rotate so it is like pixil 0 is at +x
-  azPixel += AZREF;
-  if (azPixel >= NUMAZ)
-    azPixel -= NUMAZ;  
-  strip.setPixelColor(azPixel, 50,0,0);
+  int pix;
+  int red;
+  int blue;
+  int pixDeg;
+  for(int i=0;i<NUMAZ;i++){
+    pix = i + AZREF;
+    if (pix >= NUMAZ){
+      pix -= NUMAZ;  
+    }
+    
+    pixDeg = (pix-AZREF)*15;
+    if (pixDeg<0){
+      pixDeg += 360;
+    }
+    // Have pixil number in pix, now do color magic
+    Serial.print("Pixil ");
+    Serial.print(pix);
+    Serial.print(" at ");
+    Serial.print(pixDeg);
+    Serial.print(" degrees, difference of ");
+    Serial.println(abs(pixDeg - angle));
+    
+    int diff;
+    diff = abs(pixDeg - angle);
+    
+    if (diff>180){
+      diff = abs(360 - diff);
+    }
+    
+    red = 150 - diff;
+    if (red<0){
+      red = 0;
+    }
+    
+    diff = abs(pixDeg - angle - 180);
+    
+    if (diff>180){
+      diff = abs(360 - diff);
+    }
+    
+    blue = 150 -diff;
+    if (blue<0){
+      blue = 0;
+    }
+    //blue = 0;
+    strip.setPixelColor(pix,red/3,0,blue/3);
+  }
   strip.show();
 }
 
@@ -82,7 +122,7 @@ void plotInclination(float inclination){
   strip.show();
 }
   
-  
+
 
 float calcInclination(float x, float y, float z)
 {
