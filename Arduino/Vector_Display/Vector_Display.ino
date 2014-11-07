@@ -6,9 +6,10 @@
 #define PIXILPIN 13 // Pin on the Arduino that the NeoPixil chain is connected to
 #define NUMAZ 24  // Number of pixils on the azimuth ring
 #define NUMINC 16 // Number of pixils on the inclination ring
+#define INCANGLE 259 //Angle that pixil zero is at on inc ring
 
 #define AZREF 5 // Pixil Number that the y+ axis points at
-#define INCREF 10 // Pixil Number (ring frame) that is to the +x axis side of vertical
+#define INCREF 11 // Pixil Number (ring frame) that is to the +x axis side of vertical
 
 float heading;
 float inclination;
@@ -60,7 +61,7 @@ void loop() {
   }
   
   plotAzimuth(360 - heading);
-  //plotInclination(inclination);
+  plotInclination(inclination,360-heading);
   count += 1;
   delay(10);
 }
@@ -88,7 +89,7 @@ void plotAzimuth(int angle){
       diff = abs(360 - diff);
     }
     
-    red = 150 - diff;
+    red = 60 - diff;
     if (red<0){
       red = 0;
     }
@@ -99,26 +100,90 @@ void plotAzimuth(int angle){
       diff = abs(360 - diff);
     }
     
-    blue = 150 -diff;
+    blue = 170 -diff;
     if (blue<0){
       blue = 0;
     }
     //blue = 0;
-    strip.setPixelColor(pix,red/3,0,blue/3);
+    strip.setPixelColor(pix,red,0,blue/4);
   }
   strip.show();
 }
 
-void plotInclination(float inclination){
-  strip.setPixelColor(incPixel, 0,0,0);
-  incPixel = int((360-inclination)/(360/NUMINC));
-  // Rotate so it is like pixil 0 is at +x
-  incPixel += INCREF;
-  if (incPixel>15)
-    incPixel -= 15;  
-  // Add offset from previous pixel ring
-  incPixel += 23;
-  strip.setPixelColor(incPixel, 50,0,0);
+void plotInclination(float angle, float heading){
+  int pix;
+  int red;
+  int blue;
+  int pixDeg;
+  
+  //Serial.print("Starting angle: ");
+  //Serial.println(angle);
+  
+  // Check if negative, and if so put at correct positive angle
+  if (angle < 0){
+    angle += 360;
+  }
+  
+  // Do azimuth switching if necessary
+  if (heading > 180){
+    angle = 180 - angle ;
+  }
+  
+  // Make sure we are under 360
+  while (angle > 360){
+    angle -= 360;
+  }
+  
+  // Make sure we are over zero
+  if (angle < 0){
+    angle += 360;
+  }
+    
+  //Serial.print("Final angle: ");
+  //Serial.println(angle); 
+  Serial.println("START NEW INC PLOT");
+  for(int i=0;i<NUMINC;i++){
+    pix = i;
+    pixDeg = INCANGLE - pix*22.5;
+    
+    if (pixDeg < 0){
+      pixDeg += 360;
+    }
+    
+    //Serial.print("Pixil ");
+    //Serial.print(pix);
+    //Serial.print(" at ");
+    //Serial.println(pixDeg);
+    
+    // Have pixil number in pix, now do color magic
+    int diff;
+    diff = abs(pixDeg - angle);
+    
+    if (diff>180){
+      diff = abs(360 - diff);
+    }
+    
+    red = 60 - diff;
+    if (red<0){
+      red = 0;
+    }
+    
+     diff = abs(pixDeg - angle - 180);
+    
+    if (diff>180){
+      diff = abs(360 - diff);
+    }
+    
+    blue = 170 -diff;
+    if (blue<0){
+      blue = 0;
+    }
+    
+    strip.setPixelColor(pix+NUMAZ,red,0,blue/4);
+    //strip.setPixelColor(24,10,10,10);
+    
+    
+  }
   strip.show();
 }
   
