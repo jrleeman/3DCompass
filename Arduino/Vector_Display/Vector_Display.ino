@@ -1,3 +1,17 @@
+/*
+  Vector_Display.ino
+  
+  Displays the orientation of the magnetic vector on two neo-pixil rings.
+  North and the inclination are marked by red, faded to blue for contrast.
+  
+  Created: 10/30/14
+  Author: John R. Leeman
+  Modified: 10/31/14
+  www.johnrleeman.com
+  www.github.com/jrleeman
+*/
+  
+
 #include <Adafruit_NeoPixel.h>
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
@@ -6,19 +20,20 @@
 #define PIXILPIN 13 // Pin on the Arduino that the NeoPixil chain is connected to
 #define NUMAZ 24  // Number of pixils on the azimuth ring
 #define NUMINC 16 // Number of pixils on the inclination ring
-#define INCANGLE 259 //Angle that pixil zero is at on inc ring
 
+#define INCANGLE 259 //Angle that pixil "zero" is at on inclination ring (nearest degree)
 #define AZREF 5 // Pixil Number that the y+ axis points at
-#define INCREF 11 // Pixil Number (ring frame) that is to the +x axis side of vertical
+
+#define STREAMDECIMATE 25 // Number of reads to write out to the serial stream
+#define DECLINATION 0.22 // Declination
 
 float heading;
 float inclination;
-int azPixel = 0;
-int incPixel = 0;
 
 // Counter to update serial output more slowly
 int count = 0;
 
+// Setup neopixil and magnetometer
 Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(12345);
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMAZ + NUMINC, PIXILPIN, NEO_GRB + NEO_KHZ800);
 
@@ -48,10 +63,12 @@ void loop() {
   sensors_event_t event; 
   mag.getEvent(&event);
   
+  // Calculate the heading and inclination from the data
   heading = 180/M_PI * calcHeading(event.magnetic.x,event.magnetic.y,event.magnetic.z);
   inclination = 180/M_PI * calcInclination(event.magnetic.x,event.magnetic.y,event.magnetic.z);
   
-  if (count%25 == 0){
+  // Every #STREAMDECIMATE reads, display data
+  if (count%STREAMDECIMATE == 0){
     Serial.print(event.magnetic.x); Serial.print(","); 
     Serial.print(event.magnetic.y); Serial.print(",");
     Serial.print(event.magnetic.z); Serial.print(",");
@@ -60,10 +77,13 @@ void loop() {
     count = 0;
   }
   
+  // Plot the Azimuth
   plotAzimuth(360 - heading);
+  
+  // Plot the Inclination
   plotInclination(inclination,360-heading);
-  count += 1;
-  delay(10);
+  
+  count += 1; 
 }
 
 void plotAzimuth(int angle){
@@ -116,9 +136,6 @@ void plotInclination(float angle, float heading){
   int blue;
   int pixDeg;
   
-  //Serial.print("Starting angle: ");
-  //Serial.println(angle);
-  
   // Check if negative, and if so put at correct positive angle
   if (angle < 0){
     angle += 360;
@@ -139,9 +156,6 @@ void plotInclination(float angle, float heading){
     angle += 360;
   }
     
-  //Serial.print("Final angle: ");
-  //Serial.println(angle); 
-  Serial.println("START NEW INC PLOT");
   for(int i=0;i<NUMINC;i++){
     pix = i;
     pixDeg = INCANGLE - pix*22.5;
@@ -149,11 +163,6 @@ void plotInclination(float angle, float heading){
     if (pixDeg < 0){
       pixDeg += 360;
     }
-    
-    //Serial.print("Pixil ");
-    //Serial.print(pix);
-    //Serial.print(" at ");
-    //Serial.println(pixDeg);
     
     // Have pixil number in pix, now do color magic
     int diff;
@@ -180,9 +189,6 @@ void plotInclination(float angle, float heading){
     }
     
     strip.setPixelColor(pix+NUMAZ,red,0,blue/4);
-    //strip.setPixelColor(24,10,10,10);
-    
-    
   }
   strip.show();
 }
@@ -200,21 +206,19 @@ float calcHeading(float x, float y, float z)
 {
   /* Given x,y,z componets of a field, return the 
      heading angle w.r.t "north". This assumes that
-     x is "east", y is "north", and z is "up".*/
-     
+     x is "east", y is "north", and z is "up".*/   
   float theta;
-  float declinationAngle = 0.22;
   theta = atan2(y, x);
-  theta += declinationAngle;
+  theta += DECLINATION;
   theta -= 0.5 * PI;
   
-  if (theta < 0)
+  if (theta < 0){
     theta += 2*PI;
+  }
  
-  
-  if (theta > 2*PI)
+  if (theta > 2*PI){
     theta -= 2*PI;
+  }
  
-  return theta;
-  
+  return theta; 
 }
