@@ -1,6 +1,6 @@
 # 3D Compass
 
-![](Photos/unit_overview.jpg)
+![](Photos/dark_light_unit.png)
 
 ## Bill of Materials
 - (1) [Arduino UNO (Red board from SparkFun)](https://www.sparkfun.com/products/12757) $19.95/ea
