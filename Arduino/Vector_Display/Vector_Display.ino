@@ -92,16 +92,18 @@ void plotAzimuth(int angle){
   int red;
   int blue;
   int pixDeg;
-  for(int i=0;i<NUMAZ;i++){
-    pix = i + AZREF;
-    if (pix >= NUMAZ){
-      pix -= NUMAZ;  
+   for(int i=0;i<NUMAZ;i++){
+    pix = i;
+    pixDeg = AZANGLE + pix*15;
+    
+    if (pixDeg > 360){
+      pixDeg -= 360;
     }
     
-    pixDeg = (pix-AZREF)*15;
-    if (pixDeg<0){
-      pixDeg += 360;
-    }
+    Serial.print("Pix ");
+    Serial.print(pix);
+    Serial.print(" at ");
+    Serial.println(pixDeg);
     // Have pixil number in pix, now do color magic
     int diff;
     diff = abs(pixDeg - angle);
@@ -125,6 +127,7 @@ void plotAzimuth(int angle){
     if (blue<0){
       blue = 0;
     }
+    //blue = 0;
     strip.setPixelColor(pix,red,0,blue/4);
   }
   strip.show();
