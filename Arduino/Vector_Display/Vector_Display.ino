@@ -25,7 +25,9 @@
 #define AZANGLE 285 //Angle that pixil zero is at on azimuth ring (nearest degree)
 
 #define STREAMDECIMATE 25 // Number of reads to write out to the serial stream
-#define DECLINATION 0.22 // Declination
+#define DECLINATION 0.22 // Declination (set for your area)
+
+#define BRIGHTNESS 1 // Increase or decrease for brighter/dimmer colors
 
 // Floats to store heading and inclination
 float heading;
@@ -93,36 +95,60 @@ void plotAzimuth(int angle){
   int pixDeg;
   
    for(int i=0;i<NUMAZ;i++){
+     
+    // Calculate angle that pixil is at and make sure it is
+    // in 0-360
     pixDeg = AZANGLE + i*15;
     
     if (pixDeg > 360){
       pixDeg -= 360;
     }
     
-    // Have pixil number in pix, now do color magic
-    int diff;
-    diff = abs(pixDeg - angle);
+    // Color based on difference of given angle and pixel angle
+    int diff = abs(pixDeg - angle);
     
+    // If the difference is over 180, we'll loop back to lower values of
+    // difference since this is a ring
     if (diff>180){
       diff = abs(360 - diff);
     }
     
+    // Do red coloring, increase the value for a larger red area, decrease
+    // for less red. If negative, set to zero
     red = 60 - diff;
     if (red<0){
       red = 0;
     }
     
+    // Do difference 180 from heading for south (blue) coloring and make
+    // sure it is in range
     diff = abs(pixDeg - angle - 180);
     
     if (diff>180){
       diff = abs(360 - diff);
     }
     
+    // Do blue coloring, increase the value for a larger blue area, decrease
+    // for less blue. If negative, set to zero
     blue = 170 -diff;
     if (blue<0){
       blue = 0;
     }
-    strip.setPixelColor(i,red,0,blue/4);
+    
+    // Set pixil colors
+    red = red*BRIGHTNESS;
+    blue = blue*BRIGHTNESS/4;
+    
+    // Make sure neither is over 255
+    if (red > 255){
+      red = 255;
+    }
+    
+    if (blue > 255){
+      blue = 255;
+    }
+    
+    strip.setPixelColor(i,red,0,blue);
   }
   strip.show();
 }
@@ -159,31 +185,51 @@ void plotInclination(float angle, float heading){
       pixDeg += 360;
     }
     
-    // Have pixil number in pix, now do color magic
-    int diff;
-    diff = abs(pixDeg - angle);
+    // Color based on difference of given angle and pixel angle
+    int diff = abs(pixDeg - angle);
     
+    // If the difference is over 180, we'll loop back to lower values of
+    // difference since this is a ring
     if (diff>180){
       diff = abs(360 - diff);
     }
     
+    // Do red coloring, increase the value for a larger red area, decrease
+    // for less red. If negative, set to zero
     red = 60 - diff;
     if (red<0){
       red = 0;
     }
     
-     diff = abs(pixDeg - angle - 180);
+    // Do difference 180 from heading for south (blue) coloring and make
+    // sure it is in range
+    diff = abs(pixDeg - angle - 180);
     
     if (diff>180){
       diff = abs(360 - diff);
     }
     
+    // Do blue coloring, increase the value for a larger blue area, decrease
+    // for less blue. If negative, set to zero
     blue = 170 -diff;
     if (blue<0){
       blue = 0;
     }
     
-    strip.setPixelColor(i+NUMAZ,red,0,blue/4);
+    // Set pixil colors
+    red = red*BRIGHTNESS;
+    blue = blue*BRIGHTNESS/4;
+    
+    // Make sure neither is over 255
+    if (red > 255){
+      red = 255;
+    }
+    
+    if (blue > 255){
+      blue = 255;
+    }
+    
+    strip.setPixelColor(i+NUMAZ,red,0,blue);
   }
   strip.show();
 }
