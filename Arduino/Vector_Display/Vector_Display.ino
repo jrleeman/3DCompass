@@ -6,7 +6,7 @@
   
   Created: 10/30/14
   Author: John R. Leeman
-  Modified: 10/31/14
+  Modified: 11/7/14
   www.johnrleeman.com
   www.github.com/jrleeman
 */
@@ -23,11 +23,11 @@
 
 #define INCANGLE 259 //Angle that pixil "zero" is at on inclination ring (nearest degree)
 #define AZANGLE 285 //Angle that pixil zero is at on azimuth ring (nearest degree)
-#define AZREF 5 // Pixil Number that the y+ axis points at
 
 #define STREAMDECIMATE 25 // Number of reads to write out to the serial stream
 #define DECLINATION 0.22 // Declination
 
+// Floats to store heading and inclination
 float heading;
 float inclination;
 
@@ -88,22 +88,17 @@ void loop() {
 }
 
 void plotAzimuth(int angle){
-  int pix;
   int red;
   int blue;
   int pixDeg;
+  
    for(int i=0;i<NUMAZ;i++){
-    pix = i;
-    pixDeg = AZANGLE + pix*15;
+    pixDeg = AZANGLE + i*15;
     
     if (pixDeg > 360){
       pixDeg -= 360;
     }
     
-    Serial.print("Pix ");
-    Serial.print(pix);
-    Serial.print(" at ");
-    Serial.println(pixDeg);
     // Have pixil number in pix, now do color magic
     int diff;
     diff = abs(pixDeg - angle);
@@ -127,14 +122,12 @@ void plotAzimuth(int angle){
     if (blue<0){
       blue = 0;
     }
-    //blue = 0;
-    strip.setPixelColor(pix,red,0,blue/4);
+    strip.setPixelColor(i,red,0,blue/4);
   }
   strip.show();
 }
 
 void plotInclination(float angle, float heading){
-  int pix;
   int red;
   int blue;
   int pixDeg;
@@ -160,8 +153,7 @@ void plotInclination(float angle, float heading){
   }
     
   for(int i=0;i<NUMINC;i++){
-    pix = i;
-    pixDeg = INCANGLE - pix*22.5;
+    pixDeg = INCANGLE - i*22.5;
     
     if (pixDeg < 0){
       pixDeg += 360;
@@ -191,7 +183,7 @@ void plotInclination(float angle, float heading){
       blue = 0;
     }
     
-    strip.setPixelColor(pix+NUMAZ,red,0,blue/4);
+    strip.setPixelColor(i+NUMAZ,red,0,blue/4);
   }
   strip.show();
 }
