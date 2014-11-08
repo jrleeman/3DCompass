@@ -22,6 +22,7 @@
 #define NUMINC 16 // Number of pixils on the inclination ring
 
 #define INCANGLE 259 //Angle that pixil "zero" is at on inclination ring (nearest degree)
+#define AZANGLE 285 //Angle that pixil zero is at on azimuth ring (nearest degree)
 #define AZREF 5 // Pixil Number that the y+ axis points at
 
 #define STREAMDECIMATE 25 // Number of reads to write out to the serial stream
@@ -124,7 +125,6 @@ void plotAzimuth(int angle){
     if (blue<0){
       blue = 0;
     }
-    //blue = 0;
     strip.setPixelColor(pix,red,0,blue/4);
   }
   strip.show();
