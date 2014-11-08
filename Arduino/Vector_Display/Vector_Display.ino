@@ -20,14 +20,14 @@
 #define PIXILPIN 13 // Pin on the Arduino that the NeoPixil chain is connected to
 #define NUMAZ 24  // Number of pixils on the azimuth ring
 #define NUMINC 16 // Number of pixils on the inclination ring
-
 #define INCANGLE 259 //Angle that pixil "zero" is at on inclination ring (nearest degree)
 #define AZANGLE 285 //Angle that pixil zero is at on azimuth ring (nearest degree)
-
 #define STREAMDECIMATE 25 // Number of reads to write out to the serial stream
-#define DECLINATION 0.22 // Declination (set for your area)
-
 #define BRIGHTNESS 1 // Increase or decrease for brighter/dimmer colors
+
+// Declination in radians, go to http://www.adafruit.com/datasheets/AN203_Compass_Heading_Using_Magnetometers.pdf
+// to find your declination and the multiply that angle by 2*pi/180. West is positive, East is negative
+#define DECLINATION 0.34 
 
 // Floats to store heading and inclination
 float heading;
