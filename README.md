@@ -71,3 +71,11 @@ make this easier.
 - Connect the GND, SDA, and SCL pins of the magnetometer to GND, SDA, and SCL
 on the Arduino.
 - Connect the power pin of the magnetometer to the +3.3VDC pin on the Arduino.
+
+## Programming
+- Install the [NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel),
+[Adafruit Sensor](https://github.com/adafruit/Adafruit_Sensor), and
+[Magnetometer](https://github.com/adafruit/Adafruit_HMC5883_Unified) libraries.
+For help, see the [library tutorial.](https://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use)
+- Connect the Arduino to your computer and upload the code (see the [Arduino guide](http://arduino.cc/en/Guide/HomePage))
+- Play with parameters such as brightness and grading to create your own display!
