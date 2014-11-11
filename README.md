@@ -59,7 +59,7 @@ shouldn't be too much of a problem.
 - Trim and solder the data-in wire on the vertical ring to the data-out pad
 on the 24-element ring.
 - Connect the data-in pad on the 24-element horizontal ring to pin 13 on the
-Arduino. You can use 0.1" header to make this easier to assemble and troubleshoot.
+Arduino. The resistor goes in-line here as well. You can use 0.1" header to make this easier to assemble and troubleshoot.
 - Connect a ground pad from the 24-element horizontal ring to a ground pad
 on the 16-element vertical ring.
 - Connect the second ground pad on the 16-element vertical ring to the ground
@@ -77,5 +77,5 @@ on the Arduino.
 [Adafruit Sensor](https://github.com/adafruit/Adafruit_Sensor), and
 [Magnetometer](https://github.com/adafruit/Adafruit_HMC5883_Unified) libraries.
 For help, see the [library tutorial.](https://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use)
-- Connect the Arduino to your computer and upload the code (see the [Arduino guide](http://arduino.cc/en/Guide/HomePage))
+- Connect the Arduino to your computer and upload the code in the Arduino/Vector_Display directory (see the [Arduino guide](http://arduino.cc/en/Guide/HomePage)) if you need help uploading programs to the Arduino.
 - Play with parameters such as brightness and grading to create your own display!
