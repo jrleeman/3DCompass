@@ -79,3 +79,12 @@ on the Arduino.
 For help, see the [library tutorial.](https://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use)
 - Connect the Arduino to your computer and upload the code in the Arduino/Vector_Display directory (see the [Arduino guide](http://arduino.cc/en/Guide/HomePage)) if you need help uploading programs to the Arduino.
 - Play with parameters such as brightness and grading to create your own display!
+
+## Activity Ideas
+You can learn a lot from your new compass/magnetometer! In addition to learning about the
+electronics and hardware, you can learn about magnetic fields and the Earth's geodynamo. Below are a few links to get you started and some ideas. Please contribute any experiments or activities that you develop!
+
+- Learn how magnetometer calibration works ([Freescale App Note](http://www.freescale.com/files/sensors/doc/app_note/AN4246.pdf))
+- Measure the diurnal variation in [Earth's magnetic field](http://geophysics.ou.edu/solid_earth/notes/mag_earth/earth.htm)
+- See how good of a [metal detector](http://en.wikipedia.org/wiki/Metal_detector) you built
+- Detect the movement of metal objects like a desk drawer
