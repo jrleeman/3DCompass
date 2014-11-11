@@ -3,7 +3,7 @@
 ![](Photos/dark_light_unit.png)
 
 ## Bill of Materials
-- (1) [Arduino UNO (Red board from SparkFun)](https://www.sparkfun.com/products/12757) $19.95/ea
+- (1) [Arduino UNO (I used a Red board from SparkFun)](https://www.sparkfun.com/products/12757) $19.95/ea
 - (1) [NeoPixel Ring - 16 Element](http://www.adafruit.com/products/1463) $9.95/ea
 - (1) [NeoPixil Ring - 24 Element](http://www.adafruit.com/products/1586) $19.95/ea
 - (1) [1000uF Capacitor - 6.3V or higher](https://www.sparkfun.com/products/8982) $0.35/ea
