@@ -72,6 +72,8 @@ make this easier.
 on the Arduino.
 - Connect the power pin of the magnetometer to the +3.3VDC pin on the Arduino.
 
+![](Fritzing/3D_Compass_bb.png)
+
 ## Programming
 - Install the [NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel),
 [Adafruit Sensor](https://github.com/adafruit/Adafruit_Sensor), and
