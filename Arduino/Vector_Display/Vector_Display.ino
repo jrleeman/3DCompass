@@ -6,10 +6,12 @@
 
   Created: 10/30/14
   Author: John R. Leeman
-  Modified: 7/20/16
-  Author: Ryan Claussen
   www.johnrleeman.com
   www.github.com/jrleeman
+
+  Modified: 7/20/16
+  Author: Ryan Claussen
+  wwww.github.com/rtclauss
 */
 
 
@@ -26,8 +28,9 @@
 #define STREAMDECIMATE 25 // Number of reads to write out to the serial stream
 #define BRIGHTNESS 1 // Increase or decrease for brighter/dimmer colors
 
-// Declination in radians, go to http://www.adafruit.com/datasheets/AN203_Compass_Heading_Using_Magnetometers.pdf
-// to find your declination and the multiply that angle by 2*pi/180. West is negative, East is positive
+// Declination in radians, go to http://geomag.org/models/wmm-declination.html
+// to find your declination, then convert it to decimal degrees, and then
+// multiply that angle by 2*pi/180. West is negative, East is positive
 // This is the declination for Brookings, SD in the 2015-2020 WMM.
 #define DECLINATION 0.05
 
@@ -68,7 +71,7 @@ void loop() {
   sensors_event_t event;
   mag.getEvent(&event);
 
-  // Calculate the heading and inclination from the data
+  // Calculate the heading and inclination from the data and convert to degrees
   heading = 180/M_PI * calcHeading(event.magnetic.x,event.magnetic.y,event.magnetic.z);
   inclination = 180/M_PI * calcInclination(event.magnetic.x,event.magnetic.y,event.magnetic.z);
 
@@ -79,7 +82,7 @@ void loop() {
     Serial.print(event.magnetic.z); Serial.print(",");
     Serial.print(heading); Serial.print(",");
     Serial.println(inclination);
-    count = 0;
+    count = 0; //prevent overflow of int
   }
 
   // Plot the Azimuth
@@ -137,7 +140,7 @@ void plotAzimuth(int angle){
       blue = 0;
     }
 
-    // Set pixel colors
+    // Set pixel color brightnesses
     red = red*BRIGHTNESS;
     blue = blue*BRIGHTNESS/5;
 
@@ -149,9 +152,10 @@ void plotAzimuth(int angle){
     if (blue > 255){
       blue = 255;
     }
-
+    //Actually set the color on the NeoPixel ring
     strip.setPixelColor(i,red,0,blue);
   }
+  //Refresh the NeoPixel displays
   strip.show();
 }
 
@@ -218,7 +222,7 @@ void plotInclination(float angle, float heading){
       blue = 0;
     }
 
-    // Set pixel colors
+    // Set pixel color brightness
     red = red*BRIGHTNESS;
     blue = blue*BRIGHTNESS/5;
 
@@ -230,9 +234,10 @@ void plotInclination(float angle, float heading){
     if (blue > 255){
       blue = 255;
     }
-
+    //Actually set the color on the NeoPixel ring
     strip.setPixelColor(i+NUMAZ,red,0,blue);
   }
+  //Refresh the NeoPixel displays
   strip.show();
 }
 
