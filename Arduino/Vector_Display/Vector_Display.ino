@@ -139,7 +139,7 @@ void plotAzimuth(int angle){
     
     // Set pixil colors
     red = red*BRIGHTNESS;
-    blue = blue*BRIGHTNESS/4;
+    blue = blue*BRIGHTNESS/5;
     
     // Make sure neither is over 255
     if (red > 255){
@@ -220,7 +220,7 @@ void plotInclination(float angle, float heading){
     
     // Set pixil colors
     red = red*BRIGHTNESS;
-    blue = blue*BRIGHTNESS/4;
+    blue = blue*BRIGHTNESS/5;
     
     // Make sure neither is over 255
     if (red > 255){
