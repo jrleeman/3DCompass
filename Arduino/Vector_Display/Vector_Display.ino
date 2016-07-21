@@ -6,7 +6,8 @@
   
   Created: 10/30/14
   Author: John R. Leeman
-  Modified: 11/7/14
+  Modified: 7/20/16
+  Author: Ryan Claussen
   www.johnrleeman.com
   www.github.com/jrleeman
 */
@@ -26,8 +27,9 @@
 #define BRIGHTNESS 1 // Increase or decrease for brighter/dimmer colors
 
 // Declination in radians, go to http://www.adafruit.com/datasheets/AN203_Compass_Heading_Using_Magnetometers.pdf
-// to find your declination and the multiply that angle by 2*pi/180. West is positive, East is negative
-#define DECLINATION 0.34 
+// to find your declination and the multiply that angle by 2*pi/180. West is negative, East is positive
+// This is the declination for Brookings, SD in the 2015-2020 WMM.
+#define DECLINATION 0.05 
 
 // Floats to store heading and inclination
 float heading;
@@ -250,7 +252,7 @@ float calcHeading(float x, float y, float z)
      x is "east", y is "north", and z is "up".*/   
   float theta;
   theta = atan2(y, x);
-  theta += DECLINATION;
+  theta -= DECLINATION;
   theta -= 0.5 * PI;
   
   if (theta < 0){
