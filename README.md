@@ -81,6 +81,8 @@ on the Arduino.
 For help, see the [library tutorial.](https://learn.adafruit.com/adafruit-all-about-arduino-libraries-install-use)
 - Connect the Arduino to your computer and upload the code in the Arduino/Vector_Display directory (see the [Arduino guide](http://arduino.cc/en/Guide/HomePage)) if you need help uploading programs to the Arduino.
 - Play with parameters such as brightness and grading to create your own display!
+- The `#define DECLINATION` directive adjusts the compass headings for your current location.  You can look up this value on the [CIRES World Magnetic Map](http://geomag.org/models/wmm-declination.html), but you need to convert the DMS to radians.
+
 
 ## Activity Ideas
 You can learn a lot from your new compass/magnetometer! In addition to learning about the
