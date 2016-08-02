@@ -29,8 +29,10 @@
 #define BRIGHTNESS 1 // Increase or decrease for brighter/dimmer colors
 
 // Declination in radians, go to http://geomag.org/models/wmm-declination.html
-// to find your declination, then convert it to decimal degrees, and then
-// multiply that angle by 2*pi/180. West is negative, East is positive
+// to find your declination, then convert it to decimal degrees. To convert 
+// DMS to decimal degrees add minutes/60 and seconds/3600 to the whole degrees.
+// Multiply that angle by 2*pi/180 to convert to radians from degrees. 
+// West is negative, East is positive
 // This is the declination for Brookings, SD in the 2015-2020 WMM.
 #define DECLINATION 0.05
 
